@@ -1,7 +1,6 @@
 package app
 
 import (
-	"oauth_api/src/client/cassandra"
 	"oauth_api/src/domain/access_token"
 	"oauth_api/src/http"
 	"oauth_api/src/repository/db"
@@ -14,11 +13,11 @@ var (
 )
 
 func StartApplication() {
-	session, dbErr := cassandra.GetSession()
-	if dbErr != nil {
-		panic(dbErr)
-	}
-	defer session.Close()
+	// session, dbErr := cassandra.GetSession()
+	// if dbErr != nil {
+	// 	panic(dbErr)
+	// }
+	// defer session.Close()
 
 	atService := access_token.NewService(db.NewRepository())
 	atHandler := http.NewHandler(atService)
