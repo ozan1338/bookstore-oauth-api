@@ -1,9 +1,10 @@
 package app
 
 import (
-	"oauth_api/src/domain/access_token"
 	"oauth_api/src/http"
 	"oauth_api/src/repository/db"
+	"oauth_api/src/repository/rest"
+	"oauth_api/src/services/access_token_service"
 
 	"github.com/gin-gonic/gin"
 )
@@ -19,7 +20,7 @@ func StartApplication() {
 	// }
 	// defer session.Close()
 
-	atService := access_token.NewService(db.NewRepository())
+	atService := access_token_service.NewService(rest.NewRestUsersRepository(),db.NewRepository())
 	atHandler := http.NewHandler(atService)
 
 	router.POST("/oauth/access_token", atHandler.Create)
