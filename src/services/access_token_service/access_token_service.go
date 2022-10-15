@@ -42,8 +42,14 @@ func (s *service) GetById(accessTokenId string) (*access_token.AccessToken, *res
 }
 
 func (s *service) Create(request access_token.AccessTokenRequest) (*access_token.AccessToken,*restError.RestError) {
+	if err := request.Validate(); err != nil {
+		return nil, err
+	}
+
+	//TODO: Support both client credential and password grant type
+
 	//Authenticate the user againt the user api
-	user, err := s.restUserRepo.Login(request.Email, request.Password)
+	user, err := s.restUserRepo.Login(request.Username, request.Password)
 	if err != nil {
 		return nil,err
 	}
