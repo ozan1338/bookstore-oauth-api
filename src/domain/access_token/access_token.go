@@ -30,7 +30,7 @@ type AccessTokenRequest struct {
 	ClientSecret string `json:"client_secret"`
 }
 
-func (at *AccessTokenRequest) Validate() *resError.RestError {
+func (at *AccessTokenRequest) Validate() resError.RestError {
 	switch at.GrantType {
 	case grantTypePassword:
 		break
@@ -57,7 +57,7 @@ type AccessToken struct {
 	Expires     int64  `json:"expires"`
 }
 
-func (at *AccessToken) Validate() *resError.RestError {
+func (at *AccessToken) Validate() resError.RestError {
 	at.AccessToken = strings.TrimSpace(at.AccessToken)
 
 	if at.AccessToken == "" {
